@@ -35,3 +35,7 @@ consume the APIs.
 - This project is designed for a single-user profile
 - MySQL strict group-by issue was handled using aggregation
 - Duplicate skill search results were handled using DISTINCT
+
+## Project Overview
+I built a backend API using Node.js and MySQL that supports profile creation, skill search, and a health check endpoint. A simple HTML and JavaScript frontend consumes these APIs.
+
