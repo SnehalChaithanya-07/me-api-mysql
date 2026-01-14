@@ -1,0 +1,33 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>My Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    input, button {
+      padding: 8px;
+      margin-top: 10px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Profile</h1>
+  <button onclick="loadProfile()">Load Profile</button>
+  <pre id="profile"></pre>
+
+  <h2>Search Skill</h2>
+  <input type="text" id="skillInput" placeholder="Enter skill">
+  <button onclick="searchSkill()">Search</button>
+  <pre id="searchResult"></pre>
+
+  <script src="script.js"></script>
+</body>
+</html>
