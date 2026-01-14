@@ -39,3 +39,7 @@ consume the APIs.
 ## Project Overview
 I built a backend API using Node.js and MySQL that supports profile creation, skill search, and a health check endpoint. A simple HTML and JavaScript frontend consumes these APIs.
 
+## Resume
+You can view my resume here:  
+[View Resume](https://drive.google.com/file/d/14QWgi9k6_TdxAVFHA-4KRQaa3vRW7SKW/view?usp=sharing)
+
