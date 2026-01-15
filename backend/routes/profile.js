@@ -2,7 +2,40 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// CREATE / UPDATE PROFILE
+
+router.get("/", (req, res) => {
+  const query = `
+    SELECT 
+      p.id,
+      p.name,
+      p.email,
+      p.education,
+      p.work,
+      GROUP_CONCAT(DISTINCT s.skill) AS skills,
+      MAX(l.github) AS github,
+      MAX(l.linkedin) AS linkedin
+    FROM profile p
+    LEFT JOIN skills s ON p.id = s.profile_id
+    LEFT JOIN links l ON p.id = l.profile_id
+    GROUP BY p.id
+    ORDER BY p.id DESC
+    LIMIT 1
+  `;
+
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (results.length === 0) {
+      return res.json({});
+    }
+
+    res.json(results[0]);
+  });
+});
+
+
 router.post("/", (req, res) => {
   const {
     name,
@@ -14,7 +47,7 @@ router.post("/", (req, res) => {
     linkedin
   } = req.body;
 
-  // Insert profile
+  
   const profileQuery = `
     INSERT INTO profile (name, email, education, work)
     VALUES (?, ?, ?, ?)
@@ -30,7 +63,7 @@ router.post("/", (req, res) => {
 
       const profileId = result.insertId;
 
-      // Insert skills (comma-separated)
+    
       if (skills) {
         const skillList = skills.split(",");
         skillList.forEach(skill => {
@@ -40,8 +73,7 @@ router.post("/", (req, res) => {
           );
         });
       }
-
-      // Insert links
+ 
       db.query(
         "INSERT INTO links (profile_id, github, linkedin) VALUES (?, ?, ?)",
         [profileId, github, linkedin]
