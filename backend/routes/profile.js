@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../db");
 
 
+ 
 router.get("/", (req, res) => {
   const query = `
     SELECT 
@@ -35,6 +36,34 @@ router.get("/", (req, res) => {
   });
 });
 
+ 
+
+router.get("/search", (req, res) => {
+  const { skill } = req.query;
+
+  if (!skill) {
+    return res.json([]);
+  }
+
+  const query = `
+    SELECT DISTINCT
+      p.name,
+      s.skill
+    FROM profile p
+    JOIN skills s ON p.id = s.profile_id
+    WHERE s.skill LIKE ?
+  `;
+
+  db.query(query, [`%${skill}%`], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    res.json(results);
+  });
+});
+ 
+
 
 router.post("/", (req, res) => {
   const {
@@ -47,7 +76,6 @@ router.post("/", (req, res) => {
     linkedin
   } = req.body;
 
-  
   const profileQuery = `
     INSERT INTO profile (name, email, education, work)
     VALUES (?, ?, ?, ?)
@@ -62,8 +90,8 @@ router.post("/", (req, res) => {
       }
 
       const profileId = result.insertId;
+ 
 
-    
       if (skills) {
         const skillList = skills.split(",");
         skillList.forEach(skill => {
@@ -83,5 +111,7 @@ router.post("/", (req, res) => {
     }
   );
 });
+ 
+
 
 module.exports = router;
