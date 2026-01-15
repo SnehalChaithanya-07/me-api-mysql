@@ -66,4 +66,5 @@ You can view my resume here:
 ## Live URLs
 - Backend API: https://me-api-mysql.onrender.com
 - Health Check: https://me-api-mysql.onrender.com/health
+- Profile API: https://me-api-mysql.onrender.com/profile
 - Frontend App: https://6968d1570337b1aab801549f--fascinating-longma-f06c45.netlify.app/
